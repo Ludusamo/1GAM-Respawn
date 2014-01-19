@@ -17,7 +17,7 @@ int main() {
     // Timing
     sf::Clock clock;
     sf::Time delta;
-    const sf::Time ups = sf::seconds(1.0f / 120.0f); // Updates Per Second
+    const sf::Time ups = sf::seconds(1.0f / 90.0f); // Updates Per Second
 
     // Main Game Loop
     while (window.isOpen()) {

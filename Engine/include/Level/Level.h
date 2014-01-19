@@ -31,9 +31,6 @@ public:
 
     int getWidth();
     int getHeight();
-
-    // TEMPORARY
-    void switchTime(bool day);
 protected:
 private:
     // Map
@@ -49,7 +46,7 @@ private:
 
     // Shader
     sf::Shader shader;
-    float ambientIntensity = .7f;
+    float ambientIntensity = 1.0f;
     sf::Vector3f ambientColor;
 };
 #endif // LEVEL_H

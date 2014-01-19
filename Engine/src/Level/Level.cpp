@@ -13,9 +13,9 @@ void Level::load() {
         if (!shader.loadFromFile("res/shaders/AmbientShader.glsl", sf::Shader::Fragment))
             std::cout << "Cannot load shader." << std::endl;
     shader.setParameter("texture", sf::Shader::CurrentTexture);
-    ambientColor.x = 0.3f;
-    ambientColor.y = 0.3f;
-    ambientColor.z = 0.7f;
+    ambientColor.x = 1.0f;
+    ambientColor.y = 1.0f;
+    ambientColor.z = 1.0f;
 
     shader.setParameter("ambientColor", ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
 
@@ -91,29 +91,12 @@ void Level::unload() {
 }
 
 void Level::update(sf::Time delta) {
-//    player.addAcceleration(sf::Vector2f(0, 9.8));
     player.update(colMap, delta);
 }
 
 void Level::render(sf::RenderWindow &window) {
     window.draw(tmap, &shader);
     window.draw(player, &shader);
-}
-
-void Level::switchTime(bool day) {
-    if (day) {
-        ambientIntensity = 1.0f;
-        ambientColor.x = 1.0f;
-        ambientColor.y = 1.0f;
-        ambientColor.z = 1.0f;
-        shader.setParameter("ambientColor", ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
-    } else {
-        ambientIntensity = .7f;
-        ambientColor.x = .3f;
-        ambientColor.y = .3f;
-        ambientColor.z = .7f;
-        shader.setParameter("ambientColor", ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
-    }
 }
 
 Player &Level::getPlayer() {

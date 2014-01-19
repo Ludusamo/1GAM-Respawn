@@ -44,7 +44,7 @@ void GameScreen::update(sf::Time delta) {
     else center.y = level.getPlayer().getPosition().y;
 
     // Player movements
-    if (input.keyPressed(up)) level.getPlayer().setAccelerationY(-2);
+    if (input.keyPressed(up)) level.getPlayer().jump();
     else if (input.keyPressed(down)) level.getPlayer().setAccelerationY(2);
     else level.getPlayer().setAccelerationY(0);
 
@@ -53,8 +53,6 @@ void GameScreen::update(sf::Time delta) {
     else level.getPlayer().setAccelerationX(0);
 
     // TEMPORARY
-    if (input.keyPressed(sf::Keyboard::O)) level.switchTime(true);
-    if (input.keyPressed(sf::Keyboard::P)) level.switchTime(false);
     if (input.keyPressed(sf::Keyboard::L)) level.saveLevel();
 }
 

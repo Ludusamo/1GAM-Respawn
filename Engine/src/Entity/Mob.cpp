@@ -18,6 +18,8 @@ void Mob::load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector
     vertices.resize(4);
     tex = texture;
 
+    STATE = FALLING;
+
     bounds.top = getPosition().y;
     bounds.left = getPosition().x;
     bounds.width = mSize.x;
@@ -28,13 +30,30 @@ void Mob::unload() {
     vertices.clear();
 }
 
-void Mob::update(std::vector<std::vector<int>> colMap, sf::Time delta) {
+void Mob::update(VI colMap, sf::Time delta) {
+    addAcceleration(sf::Vector2f(0, 2 + jumpF));
+    if (velocity.y > 0) setState(FALLING);
+
+    if (STATE == JUMPING) {
+        std::cout << acceleration.y << " " << STATE << std::endl;
+        jumpDelta += delta;
+        if (jumpDelta.asMilliseconds() >= 100) {
+            jumpF += 2;
+            jumpDelta = sf::Time::Zero;
+        }
+        if (jumpF >= 0) {
+            setState(FALLING);
+        }
+    } else {
+        jumpF = 0;
+    }
+
     moveM(colMap, delta);
 
     if (acceleration.y < 0) {
         animation.setModifier(UP);
         animation.update(vertices, mSize, delta);
-    } else if (acceleration.y > 0) {
+    } else if (acceleration.y > 0 && STATE == FALLING) {
         animation.setModifier(DOWN);
         animation.update(vertices, mSize, delta);
     }
@@ -48,12 +67,12 @@ void Mob::update(std::vector<std::vector<int>> colMap, sf::Time delta) {
     }
 }
 
-void Mob::moveM(std::vector<std::vector<int>> colMap, sf::Time delta) {
+void Mob::moveM(VI colMap, sf::Time delta) {
     velocity += acceleration;
     checkCollision(colMap, delta);
 }
 
-void Mob::checkCollision(std::vector<std::vector<int>> colMap, sf::Time delta) {
+void Mob::checkCollision(VI colMap, sf::Time delta) {
     collision = bounds;
 
     // Checking x-axis
@@ -83,9 +102,9 @@ void Mob::checkCollision(std::vector<std::vector<int>> colMap, sf::Time delta) {
 
     collision.top += velocity.y;
     for (unsigned int i = 0; i < collidable.size(); i++) {
-        if (collision.top < collidable[i].top + collidable[i].height || collision.top + collision.height > collidable[i].top
-                || collision.left < collidable[i].left + collidable[i].width || collision.left + collision.width < collidable[i].left) {
+        if (contains(collision, collidable[i])) {
             setVelocityY(0);
+            setState(STILL);
             break;
         }
     }
@@ -103,7 +122,7 @@ void Mob::checkCollision(std::vector<std::vector<int>> colMap, sf::Time delta) {
     bounds.top = getPosition().y;
 }
 
-void Mob::collidableTiles(std::vector<std::vector<int>> colMap, int startX, int endX, int startY, int endY) {
+void Mob::collidableTiles(VI colMap, int startX, int endX, int startY, int endY) {
     collidable.clear();
     for (int y = startY / 32; y <= endY / 32; y++) {
         for (int x = startX / 32; x <= endX / 32; x++) {
@@ -111,6 +130,13 @@ void Mob::collidableTiles(std::vector<std::vector<int>> colMap, int startX, int 
                 collidable.push_back(sf::FloatRect(x, y, 1, 1));
             }
         }
+    }
+}
+
+void Mob::jump() {
+    if ((STATE == STILL || STATE == MOVING)) {
+        setState(JUMPING);
+        jumpF = -5;
     }
 }
 
@@ -140,6 +166,34 @@ void Mob::setVelocityY(float v) {
     velocity.y = v;
 }
 
+void Mob::setState(int state) {
+    STATE = state;
+}
+
 void Mob::addAcceleration(sf::Vector2f v) {
     acceleration += v;
+}
+
+int Mob::getState() {
+    return STATE;
+}
+
+float Mob::getHP() {
+    return hp;
+}
+
+float Mob::getSTR() {
+    return str;
+}
+
+float Mob::getDEF() {
+    return def;
+}
+
+void Mob::subHP(float dmg) {
+    hp -= dmg;
+}
+
+void Mob::addHP(float heal) {
+    hp += heal;
 }

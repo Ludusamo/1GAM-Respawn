@@ -9,6 +9,7 @@
 #include <math.h>
 
 #define FRICTION 0.9
+typedef std::vector<std::vector<int>> VI;
 
 class Mob : public Entity {
 public:
@@ -17,15 +18,29 @@ public:
 
     virtual void load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector2i mSize);
     virtual void unload();
-    virtual void update(std::vector<std::vector<int>> colMap, sf::Time delta);
-    void moveM(std::vector<std::vector<int>> colMap, sf::Time delta);
-    void checkCollision(std::vector<std::vector<int>> colMap, sf::Time delta);
+    virtual void update(VI colMap, sf::Time delta);
+
+
+    void moveM(VI colMap, sf::Time delta);
+    void checkCollision(VI colMap, sf::Time delta);
+
+    void jump();
+
     void setAccelerationX(float a);
     void setAccelerationY(float a);
     void setVelocityX(float v);
     void setVelocityY(float v);
+    void setState(int state);
     void addAcceleration(sf::Vector2f v);
+
     Animation &getAnimation();
+    int getState();
+
+    float getHP();
+    float getSTR();
+    float getDEF();
+    void subHP(float dmg);
+    void addHP(float heal);
 protected:
     // Physics
     sf::Vector2f velocity;
@@ -42,9 +57,20 @@ protected:
     sf::FloatRect bounds;
     int startX, endX, startY, endY;
 private:
-    void collidableTiles(std::vector<std::vector<int>> colMap, int startX, int endX, int startY, int endY);
-    bool contains(sf::FloatRect x, sf::FloatRect y);
+    void collidableTiles(VI colMap, int startX, int endX, int startY, int endY);
     enum direction { UP, DOWN, LEFT, RIGHT };
+    enum state { STILL, MOVING, JUMPING, FALLING };
+    bool contains(sf::FloatRect x, sf::FloatRect y);
+    int STATE;
+
+    // Jumping
+    float jumpF = 0;
+    sf::Time jumpDelta = sf::Time::Zero;
+
+    // Attributes
+    float hp;
+    float str;
+    float def;
 };
 
 #endif // MOB_H
