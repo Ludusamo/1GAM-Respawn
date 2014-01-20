@@ -22,17 +22,17 @@ void Animation::unload() {
 
 }
 
-void Animation::update(sf::VertexArray &vertices, sf::Vector2i mSize, sf::Time delta) {
+void Animation::update(sf::VertexArray &vertices, float mSize, sf::Time delta) {
     elapsedTime += delta.asSeconds();
     if (elapsedTime > delay) {
         if (currentAnimationIndex + 1 < totalFrames) currentAnimationIndex++;
         else currentAnimationIndex = 0;
         elapsedTime = 0;
     }
-    vertices[0].texCoords = sf::Vector2f((startIndexX * mSize.x) + (currentAnimationIndex * mSize.x), (startIndexY * mSize.y) + (modifier * mSize.y));
-    vertices[1].texCoords = sf::Vector2f((startIndexX * mSize.x) + (currentAnimationIndex * mSize.x) + mSize.x, (startIndexY * mSize.y) + (modifier * mSize.y));
-    vertices[2].texCoords = sf::Vector2f((startIndexX * mSize.x) + (currentAnimationIndex * mSize.x) + mSize.x, (startIndexY * mSize.y) + mSize.y + (modifier * mSize.y));
-    vertices[3].texCoords = sf::Vector2f((startIndexX * mSize.x) + (currentAnimationIndex * mSize.x), (startIndexY * mSize.y) + mSize.y + (modifier * mSize.y));
+    vertices[0].texCoords = sf::Vector2f((startIndexX * mSize) + (currentAnimationIndex * mSize), (startIndexY * mSize) + (modifier * mSize));
+    vertices[1].texCoords = sf::Vector2f((startIndexX * mSize) + (currentAnimationIndex * mSize) + mSize, (startIndexY * mSize) + (modifier * mSize));
+    vertices[2].texCoords = sf::Vector2f((startIndexX * mSize) + (currentAnimationIndex * mSize) + mSize, (startIndexY * mSize) + mSize + (modifier * mSize));
+    vertices[3].texCoords = sf::Vector2f((startIndexX * mSize) + (currentAnimationIndex * mSize), (startIndexY * mSize) + mSize + (modifier * mSize));
 }
 
 void Animation::setModifier(int x) {

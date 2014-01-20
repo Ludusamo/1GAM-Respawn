@@ -12,11 +12,9 @@ public:
     ~Player();
 
     void load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector2i mSize);
-    void unload();
+    void update(VI colMap, sf::Time delta);
 protected:
 private:
-    sf::Sprite p_sprite;
-    sf::Texture p_tex;
 };
 
 #endif // PLAYER_H

@@ -6,10 +6,10 @@
 #include "TileData.h"
 #include "Level/Tilemap.h"
 #include "Entity/Player.h"
-#include "MapGenerator.h"
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include "AI/AI.h"
 
 #define TILE_SIZE 32
 #define SCALE 2.0
@@ -43,10 +43,16 @@ private:
     // Player
     Player player;
     sf::Texture pTex;
+    sf::Texture aiTex;
 
     // Shader
     sf::Shader shader;
     float ambientIntensity = 1.0f;
     sf::Vector3f ambientColor;
+
+    //TEMP
+    AI ai;
+
+    Player p2;
 };
 #endif // LEVEL_H

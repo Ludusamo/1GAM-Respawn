@@ -45,7 +45,6 @@ void GameScreen::update(sf::Time delta) {
 
     // Player movements
     if (input.keyPressed(up)) level.getPlayer().jump();
-    else if (input.keyPressed(down)) level.getPlayer().setAccelerationY(2);
     else level.getPlayer().setAccelerationY(0);
 
     if (input.keyPressed(left)) level.getPlayer().setAccelerationX(-2);

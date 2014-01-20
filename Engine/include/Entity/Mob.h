@@ -9,6 +9,8 @@
 #include <math.h>
 
 #define FRICTION 0.9
+#define SIZE 32
+
 typedef std::vector<std::vector<int>> VI;
 
 class Mob : public Entity {
@@ -17,9 +19,7 @@ public:
     ~Mob();
 
     virtual void load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector2i mSize);
-    virtual void unload();
     virtual void update(VI colMap, sf::Time delta);
-
 
     void moveM(VI colMap, sf::Time delta);
     void checkCollision(VI colMap, sf::Time delta);
@@ -56,12 +56,13 @@ protected:
     sf::FloatRect collision;
     sf::FloatRect bounds;
     int startX, endX, startY, endY;
-private:
-    void collidableTiles(VI colMap, int startX, int endX, int startY, int endY);
+
     enum direction { UP, DOWN, LEFT, RIGHT };
     enum state { STILL, MOVING, JUMPING, FALLING };
-    bool contains(sf::FloatRect x, sf::FloatRect y);
     int STATE;
+private:
+    void collidableTiles(VI colMap, int startX, int endX, int startY, int endY);
+    bool contains(sf::FloatRect x, sf::FloatRect y);
 
     // Jumping
     float jumpF = 0;

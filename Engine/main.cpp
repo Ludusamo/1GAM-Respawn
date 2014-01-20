@@ -4,7 +4,6 @@
 #include <SFML/System.hpp>
 #include "System/ScreenManager.h"
 #include "Level/TileData.h"
-#include "MapGenerator.h"
 
 int main() {
     // Window
@@ -41,7 +40,7 @@ int main() {
         }
         ScreenManager::getInstance().render(window);
 
-         // Just Displays the Screen
+        // Just Displays the Screen
         window.display();
 
     }

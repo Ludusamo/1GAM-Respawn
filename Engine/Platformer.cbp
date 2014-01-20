@@ -55,6 +55,7 @@
 			<Add directory="/usr/local/lib" />
 		</Linker>
 		<Unit filename="Input" />
+		<Unit filename="include/AI/AI.h" />
 		<Unit filename="include/Animation.h" />
 		<Unit filename="include/Entity/Entity.h" />
 		<Unit filename="include/Entity/Mob.h" />
@@ -64,15 +65,12 @@
 		<Unit filename="include/Level/Tile.h" />
 		<Unit filename="include/Level/TileData.h" />
 		<Unit filename="include/Level/Tilemap.h" />
-		<Unit filename="include/Light.h" />
-		<Unit filename="include/MapGenerator.h" />
 		<Unit filename="include/Screens/GameScreen.h" />
 		<Unit filename="include/Screens/MainMenuScreen.h" />
 		<Unit filename="include/Screens/Screen.h" />
 		<Unit filename="include/Screens/SplashScreen.h" />
 		<Unit filename="include/System/FileManager.h" />
 		<Unit filename="include/System/InputManager.h" />
-		<Unit filename="include/System/Physics.h" />
 		<Unit filename="include/System/ScreenManager.h" />
 		<Unit filename="include/Transition/FadeAnimation.h" />
 		<Unit filename="include/Transition/FadeTransition.h" />
@@ -82,6 +80,7 @@
 		<Unit filename="res/lvls/test.lvl" />
 		<Unit filename="res/shaders/AmbientShader.glsl" />
 		<Unit filename="res/shaders/VertexShader.glsl" />
+		<Unit filename="src/AI/AI.cpp" />
 		<Unit filename="src/Animation.cpp" />
 		<Unit filename="src/Entity/Entity.cpp" />
 		<Unit filename="src/Entity/Mob.cpp" />
@@ -90,15 +89,12 @@
 		<Unit filename="src/Level/Level.cpp" />
 		<Unit filename="src/Level/TileData.cpp" />
 		<Unit filename="src/Level/Tilemap.cpp" />
-		<Unit filename="src/Light.cpp" />
-		<Unit filename="src/MapGenerator.cpp" />
 		<Unit filename="src/Screens/GameScreen.cpp" />
 		<Unit filename="src/Screens/MainMenuScreen.cpp" />
 		<Unit filename="src/Screens/Screen.cpp" />
 		<Unit filename="src/Screens/SplashScreen.cpp" />
 		<Unit filename="src/System/FileManager.cpp" />
 		<Unit filename="src/System/InputManager.cpp" />
-		<Unit filename="src/System/Physics.cpp" />
 		<Unit filename="src/System/ScreenManager.cpp" />
 		<Unit filename="src/Transition/FadeAnimation.cpp" />
 		<Unit filename="src/Transition/FadeTransition.cpp" />

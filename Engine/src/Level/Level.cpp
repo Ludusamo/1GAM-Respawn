@@ -20,7 +20,10 @@ void Level::load() {
     shader.setParameter("ambientColor", ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
 
     pTex.loadFromFile("res/imgs/player.png");
-    player.load(sf::Vector2f(2, 2), pTex, 2, sf::Vector2i(32, 32));
+    player.load(sf::Vector2f(2, 15), pTex, 2, sf::Vector2i(32, 32));
+
+    aiTex.loadFromFile("res/imgs/player.png");
+    ai.load(sf::Vector2f(2, 15), aiTex, 2, sf::Vector2i(32, 32), 0);
 }
 
 void Level::loadLevel(const std::string& tilesetFile, const std::string&  file) {
@@ -64,39 +67,24 @@ void Level::saveLevel() {
 }
 
 void Level::generateLevel(const std::string& tilesetFile, int widthB, int heightB) {
-    width = widthB;
-    height = heightB;
 
-    MapGenerator test("res/lvls/1.comp");
-    std::vector<std::vector<int16_t> > levelBuffer = test.generate(width, height, 0.4f);
-
-    std::vector<int> bufferV;
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            tiles.push_back(TileData::tiles[levelBuffer[x][y]].getId());
-            if (TileData::tiles[levelBuffer[x][y]].isSolid()) bufferV.push_back(1);
-            else bufferV.push_back(0);
-        }
-        colMap.push_back(bufferV);
-        bufferV.clear();
-    }
-
-    if (!tmap.load(tilesetFile, sf::Vector2u(32, 32), tiles, width, height))
-        std::cout << "Map could not be loaded." << std::endl;
 }
 
 void Level::unload() {
     tmap.unload();
     player.unload();
+    ai.unload();
 }
 
 void Level::update(sf::Time delta) {
     player.update(colMap, delta);
+    ai.update(colMap, delta);
 }
 
 void Level::render(sf::RenderWindow &window) {
     window.draw(tmap, &shader);
     window.draw(player, &shader);
+    window.draw(ai, &shader);
 }
 
 Player &Level::getPlayer() {

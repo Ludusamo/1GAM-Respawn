@@ -1,11 +1,9 @@
 #include "Transition/FadeAnimation.h"
 
-FadeAnimation::FadeAnimation()
-{
+FadeAnimation::FadeAnimation() {
     //ctor
 }
 
-FadeAnimation::~FadeAnimation()
-{
+FadeAnimation::~FadeAnimation() {
     //dtor
 }

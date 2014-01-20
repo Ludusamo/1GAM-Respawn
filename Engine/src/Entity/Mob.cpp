@@ -16,6 +16,15 @@ void Mob::load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(4);
+    vertices[0].position = sf::Vector2f(0, 0);
+    vertices[1].position = sf::Vector2f(SIZE, 0);
+    vertices[2].position = sf::Vector2f(SIZE, SIZE);
+    vertices[3].position = sf::Vector2f(0, SIZE);
+    vertices[0].texCoords = sf::Vector2f(0, 0);
+    vertices[1].texCoords = sf::Vector2f(SIZE, 0);
+    vertices[2].texCoords = sf::Vector2f(SIZE, SIZE);
+    vertices[3].texCoords = sf::Vector2f(0, SIZE);
+
     tex = texture;
 
     STATE = FALLING;
@@ -26,16 +35,11 @@ void Mob::load(sf::Vector2f pos, sf::Texture &texture, float MAX_VEL, sf::Vector
     bounds.height = mSize.y;
 }
 
-void Mob::unload() {
-    vertices.clear();
-}
-
 void Mob::update(VI colMap, sf::Time delta) {
     addAcceleration(sf::Vector2f(0, 2 + jumpF));
     if (velocity.y > 0) setState(FALLING);
 
     if (STATE == JUMPING) {
-        std::cout << acceleration.y << " " << STATE << std::endl;
         jumpDelta += delta;
         if (jumpDelta.asMilliseconds() >= 100) {
             jumpF += 2;
@@ -50,20 +54,22 @@ void Mob::update(VI colMap, sf::Time delta) {
 
     moveM(colMap, delta);
 
+    if (STATE == STILL && acceleration.x != 0) setState(MOVING);
+
     if (acceleration.y < 0) {
         animation.setModifier(UP);
-        animation.update(vertices, mSize, delta);
+        animation.update(vertices, SIZE, delta);
     } else if (acceleration.y > 0 && STATE == FALLING) {
         animation.setModifier(DOWN);
-        animation.update(vertices, mSize, delta);
+        animation.update(vertices, SIZE, delta);
     }
 
-    if (acceleration.x < 0) {
+    if (acceleration.x < 0 && STATE == MOVING) {
         animation.setModifier(LEFT);
-        animation.update(vertices, mSize, delta);
-    } else if (acceleration.x > 0) {
+        animation.update(vertices, SIZE, delta);
+    } else if (acceleration.x > 0 && STATE == MOVING) {
         animation.setModifier(RIGHT);
-        animation.update(vertices, mSize, delta);
+        animation.update(vertices, SIZE, delta);
     }
 }
 
